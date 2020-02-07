@@ -6,7 +6,7 @@ commands:
   tutorial:
     description: sending specific user for tutorial server
 permissions:
-  tutorialmanager.force:
+  tutorialmanager.clear:
     description: if user have this permission, they not leave tutorial server.
   tutorialmanager.admin:
     default: op
