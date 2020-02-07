@@ -1,0 +1,13 @@
+name: TutorialManager
+version: @version@
+main: space.mori.tutorialmanager.TutorialManager
+author: dalbodeule
+commands:
+  tutorial:
+    description: sending specific user for tutorial server
+permissions:
+  tutorialmanager.force:
+    description: if user have this permission, they not leave tutorial server.
+  tutorialmanager.admin:
+    default: op
+    description: if user have this permission, they reload plugin or sending user to tutorial server

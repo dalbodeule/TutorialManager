@@ -2,7 +2,7 @@
                     GNU AFFERO GENERAL PUBLIC LICENSE
                        Version 3, 19 November 2007
 
- Copyright (C) 2007 Free Software Foundation, Inc. <http://fsf.org/>
+ Copyright (C) 2020 On Demand. <https://mori.space/>
  Everyone is permitted to copy and distribute verbatim copies
  of this license document, but changing it is not allowed.
 
@@ -630,8 +630,8 @@ to attach them to the start of each source file to most effectively
 state the exclusion of warranty; and each file should have at least
 the "copyright" line and a pointer to where the full notice is found.
 
-    <one line to give the program's name and a brief idea of what it does.>
-    Copyright (C) <year>  <name of author>
+    TutorialManager with Tutorial Helper BungeeCord plugin
+    Copyright (C) 2020 dalbodeule
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU Affero General Public License as published
