@@ -25,7 +25,7 @@ open class CommandBase (
             args.size == 1 && SubCommands.filter { if (it.value.permissions != null) sender.hasPermission(it.value.permissions!!) else true }.keys.any { it.startsWith(args[0], ignoreCase = true) } -> {
                 SubCommands.map { it.value.name }.filter { it.startsWith(args[0], ignoreCase = true) }
             }
-            args.size > 1 && SubCommands.keys.contains(args[1]) -> {
+            args.size > 1 && SubCommands.keys.contains(args[0]) -> {
                 SubCommands[args[0]]?.tabCompleter(sender, args)?.filter {
                     it.startsWith(args[args.size - 1], ignoreCase = true)
                 } ?: listOf()

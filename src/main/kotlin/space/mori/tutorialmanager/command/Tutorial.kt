@@ -4,11 +4,13 @@ import net.md_5.bungee.api.CommandSender
 import net.md_5.bungee.api.connection.ProxiedPlayer
 import space.mori.tutorialmanager.TutorialManager.Companion.instance
 import space.mori.tutorialmanager.config.Config
+import space.mori.tutorialmanager.config.Config.isEnabled
 import space.mori.tutorialmanager.config.Config.messageColor
 import space.mori.tutorialmanager.config.Config.prefix
 import space.mori.tutorialmanager.config.Config.tutorialServer
 import space.mori.tutorialmanager.utils.CommandBase
 import space.mori.tutorialmanager.utils.SubCommand
+import space.mori.tutorialmanager.utils.getColored
 
 object Tutorial: CommandBase(
     mutableListOf(
@@ -59,7 +61,7 @@ object Tutorial: CommandBase(
                 var arg = mutableListOf<String>()
 
                 when (args.size) {
-                    1 -> {
+                    2 -> {
                         arg = instance.proxy.players.map { it.name }.toMutableList()
                         arg.add("")
                     }
@@ -78,7 +80,80 @@ object Tutorial: CommandBase(
                 Config.load()
                 sendMessage(sender, "$prefix$messageColor Reloaded config!")
 
+                if (instance.proxy.getServerInfo(tutorialServer) == null && isEnabled) {
+                    isEnabled = false
+                    sendMessage(sender, "$prefix$messageColor Tutorial server is not valid. Disable tutorial logic.")
+                } else {
+                    sendMessage(sender, "$prefix$messageColor Tutorial server is valid. Enable tutorial logic.")
+                }
+
                 return true
+            }
+        },
+        object: SubCommand(
+            "enable",
+            "Enable the tutorial logic.",
+            "",
+            "tutorialmanager.admin"
+        ) {
+            override fun commandExecutor(sender: CommandSender, args: Array<out String>): Boolean {
+                if (instance.proxy.getServerInfo(tutorialServer) != null) {
+                    isEnabled = true
+                    sendMessage(sender, "$prefix$messageColor Tutorial logic is Enabled!")
+                } else {
+                    sendMessage(sender, "$prefix$messageColor Tutorial server is not valid!")
+                }
+
+                return true
+            }
+        },
+        object: SubCommand(
+            "disable",
+            "Disable the tutorial logic.",
+            "",
+            "tutorialmanager.admin"
+        ) {
+            override fun commandExecutor(sender: CommandSender, args: Array<out String>): Boolean {
+                isEnabled = false
+                sendMessage(sender, "$prefix$messageColor Tutorial logic is Disabled!")
+
+                return true
+            }
+        },
+        object: SubCommand(
+            "server",
+            "Change the tutorial server.",
+            "<server>",
+            "tutorialmanager.admin"
+        ) {
+            override fun commandExecutor(sender: CommandSender, args: Array<out String>): Boolean {
+                return when (args.size) {
+                    1 -> false
+                    else -> {
+                        val server = instance.proxy.getServerInfo(args[1])
+
+                        if (server == null) {
+                            sendMessage(sender, "$prefix$messageColor ${args[1]} is not valid server name.")
+                        } else {
+                            tutorialServer = args[1]
+                            sendMessage(sender, "$prefix$messageColor Tutorial server has changed for ${args[1]}")
+                        }
+
+                        true
+                    }
+                }
+            }
+
+            override fun tabCompleter(sender: CommandSender, args: Array<out String>): MutableList<String> {
+                var arg = mutableListOf<String>()
+
+                when (args.size) {
+                    2 -> {
+                        arg = instance.proxy.servers.values.map { it.name }.toMutableList()
+                    }
+                }
+
+                return arg
             }
         }
     ).associateBy { it.name }.toMutableMap(),

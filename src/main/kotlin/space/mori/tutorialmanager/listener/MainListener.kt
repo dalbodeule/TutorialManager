@@ -9,6 +9,7 @@ import net.md_5.bungee.api.plugin.Listener
 import net.md_5.bungee.event.EventHandler
 import net.md_5.bungee.event.EventPriority
 import space.mori.tutorialmanager.TutorialManager.Companion.instance
+import space.mori.tutorialmanager.config.Config.isEnabled
 import space.mori.tutorialmanager.config.Config.messageColor
 import space.mori.tutorialmanager.config.Config.prefix
 import space.mori.tutorialmanager.config.Config.tutorialServer
@@ -19,7 +20,7 @@ object MainListener: Listener {
     internal fun onServerConnectEvent(event: ServerConnectEvent) {
         val targetServer: ServerInfo? = instance.proxy.getServerInfo(tutorialServer)
 
-        if (targetServer != null) {
+        if (targetServer != null && isEnabled) {
             when (event.reason) {
                 JOIN_PROXY -> {
                     if (!event.player.hasPermission("tutorialmanager.clear") && event.target != targetServer) {
