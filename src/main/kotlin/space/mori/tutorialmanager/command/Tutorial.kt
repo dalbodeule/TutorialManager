@@ -8,6 +8,7 @@ import space.mori.tutorialmanager.config.Config.isEnabled
 import space.mori.tutorialmanager.config.Config.messageColor
 import space.mori.tutorialmanager.config.Config.prefix
 import space.mori.tutorialmanager.config.Config.tutorialServer
+import space.mori.tutorialmanager.config.Config.userCanUseCommand
 import space.mori.tutorialmanager.utils.CommandBase
 import space.mori.tutorialmanager.utils.SubCommand
 import space.mori.tutorialmanager.utils.getColored
@@ -166,6 +167,9 @@ object Tutorial: CommandBase(
             when {
                 sender !is ProxiedPlayer -> {
                     sendMessage(sender, "$prefix$messageColor This command can only be run a player.")
+                }
+                !userCanUseCommand -> {
+                    sendMessage(sender, "$prefix$messageColor User can't use this command.")
                 }
                 sender.server.info.name != tutorialServer -> {
                     sender.connect(instance.proxy.getServerInfo(tutorialServer))

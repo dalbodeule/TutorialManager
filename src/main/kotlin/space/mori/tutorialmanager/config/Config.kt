@@ -27,11 +27,16 @@ object Config: ConfigBase<ConfigData>(
     internal var isEnabled: Boolean
         get() = data.isEnabled
         set(value) { data.isEnabled = value }
+
+    internal var userCanUseCommand: Boolean
+        get() = data.userCanUseCommand
+        set(value) { data.userCanUseCommand = value }
 }
 
 data class ConfigData (
     var prefix: String = "&6[Tutorial]&r",
     var messageColor: String = "&f",
     var tutorialServer: String = "tutorial",
-    var isEnabled: Boolean = true
+    var isEnabled: Boolean = true,
+    var userCanUseCommand: Boolean = true
 )
